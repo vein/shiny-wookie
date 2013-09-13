@@ -1,0 +1,494 @@
+body{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height:100%;
+	overflow: hidden;
+	background: black;
+	background: #d1d5a3;
+	-webkit-backface-visibility: hidden;
+}
+a{
+	text-decoration: none;
+}
+ul,li{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+@-webkit-keyframes flash {
+	0% { 
+		opacity: 0;
+	 }
+	 50%{
+	 	opacity: 0.5;
+	 }
+	100% { opacity: 1; }
+}
+@-moz-keyframes flash {
+	0% { 
+		opacity: 0;
+	 }
+	 50%{
+	 	opacity: 0.5;
+	 }
+	100% { opacity: 1; }
+}
+@-ms-keyframes flash {
+	0% { 
+		opacity: 0;
+	 }
+	 50%{
+	 	opacity: 0.5;
+	 }
+	100% { opacity: 1; }
+}
+@-o-keyframes flash {
+	0% { 
+		opacity: 0;
+	 }
+	 50%{
+	 	opacity: 0.5;
+	 }
+	100% { opacity: 1; }
+}
+@keyframes flash {
+	0% { 
+		opacity: 0;
+	 }
+	 50%{
+	 	opacity: 0.5;
+	 }
+	100% { opacity: 1; }
+}
+/*slideView模块*/
+
+.slideView{
+	width:100%;
+	height:100%;
+}
+.slideView .button{
+	z-index:6;
+	position: fixed;
+	left:50%;	
+	width: 110px;
+	height:38px;
+	margin-left:-55px;
+	opacity: 0.5;
+	cursor: pointer;
+	background: url(./images/icon.png) 0  0 ;
+}
+.slideView .button:hover{
+	opacity:1;
+}
+.slideView .button#prevButton{
+	top:0px;
+	background-position: 0 -33px;
+}
+.slideView .button#nextButton{	
+	bottom:0px;
+}
+.slideView .view{
+	width:100%;
+	height:100%;
+	position: relative;
+	overflow: hidden;
+}
+.slideView .view[view_name='loveNav']{
+	-webkit-animation: flash ease-in-out 0.4s;
+	-o-animation: flash ease-in-out 0.4s;
+	animation: flash ease-in-out 0.4s;
+	background: url(./images/bg3.jpg) 50% 50%;
+}
+
+.slideView .view[view_name='index']{
+	-webkit-animation: flash ease-in-out 0.4s;
+	-o-animation: flash ease-in-out 0.4s;
+	animation: flash ease-in-out 0.4s;
+	background: url(./images/bg5.jpg) 50% 50%;
+}
+.slideView .view[view_name='aboutMe']{
+	-webkit-animation: flash ease-in-out 0.4s;
+	-o-animation: flash ease-in-out 0.4s;
+	animation: flash ease-in-out 0.4s;
+	background: url(./images/bg8.jpg) 50% 50%;
+}
+
+/*loveNav模块*/
+
+.slideView .view[view_name='loveNav'] .loveNav{
+	width:500px;
+	height:500px;
+	position: absolute;
+	top:50%;
+	left:50%;
+	margin-top:-250px;
+	margin-left:-250px;
+}
+
+.slideView .view[view_name='loveNav'] .loveNav .logo{
+	position: absolute;
+	top:50%;
+	left:50%;
+	margin-left: -200px;
+	margin-top:-100px;
+	width: 400px;
+	height:200px;
+}
+.slideView .view[view_name='loveNav'] .loveNav .logo .logofont{
+	position: absolute;
+	top:-100px;
+	left:0;
+	opacity: 0;
+	cursor: pointer;
+
+	-webkit-transition: all .5s ease-in-out;
+	   -moz-transition: all .5s ease-in-out;
+	    -ms-transition: all .5s ease-in-out;
+	     -o-transition: all .5s ease-in-out;
+	        transition: all .5s ease-in-out;
+	-webkit-transform: center center;
+	   -moz-transform: center center;
+	    -ms-transform: center center;
+	     -o-transform: center center;
+	        transform: center center;
+	width: 400px;
+	height:200px;
+	z-index:2;
+	background: url(./images/logofont.png) -47px -155px;
+}
+.slideView .view[view_name='loveNav'] .loveNav .logo .heart{
+	position: absolute;
+	top:-200px;
+	left:-42px;
+	opacity: 0;
+	width: 500px;
+	height:500px;
+	cursor: pointer;
+	z-index:1;
+	background: url(./images/heart.png) -11px -62px;
+}
+.slideView .view[view_name='loveNav'] .loveNav:hover .logo .heart{
+	-webkit-animation: flash .5s ease-in-out  infinite alternate;
+	   -moz-animation: flash .5s ease-in-out  infinite alternate;
+	    -ms-animation: flash .5s ease-in-out  infinite alternate;
+	     -o-animation: flash .5s ease-in-out  infinite alternate;
+	        animation: flash .5s ease-in-out  infinite alternate;
+}
+.slideView .view[view_name='loveNav'] .loveNav .nav{
+	position: absolute;
+	left:50%;
+	top:50%;
+	margin-left:-26px;
+	margin-top: -26px;
+	width: 52px;
+	height:52px;
+	z-index:4;
+	display: none;
+}
+.slideView .view[view_name='loveNav'] .loveNav .nav li{
+	position: absolute;
+	left:0;
+	top:0;
+	width: 52px;
+	height:52px;
+	cursor: pointer;
+	display: none;
+}
+.slideView .view[view_name='loveNav'] .loveNav .nav li .icon{
+	width: 52px;
+	height:52px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 2;
+	-webkit-transition: all .25s ease-in-out;
+	   -moz-transition: all .25s ease-in-out;
+	    -ms-transition: all .25s ease-in-out;
+	     -o-transition: all .25s ease-in-out;
+	        transition: all .25s ease-in-out;
+}
+.slideView .view[view_name='loveNav'] .loveNav .nav li:hover .icon{
+	-webkit-transform: rotate(360deg);
+	   -moz-transform: rotate(360deg);
+	    -ms-transform: rotate(360deg);
+	     -o-transform: rotate(360deg);
+	        transform: rotate(360deg);
+}
+.slideView .view[view_name='loveNav'] .loveNav .nav li .text{
+	opacity: 0;
+	position: absolute;
+	width: 52px;
+	height:52px;
+	display: block;
+	left: 0;
+	top: 0;
+	text-align: center;
+	color: #fff;
+	font-size: 20px;
+	z-index: 2;
+	font-family: Microsoft YaHei;
+	-webkit-transition: all .25s ease-in-out;
+	   -moz-transition: all .25s ease-in-out;
+	    -ms-transition: all .25s ease-in-out;
+	     -o-transition: all .25s ease-in-out;
+	        transition: all .25s ease-in-out;	
+}
+.slideView .view[view_name='loveNav'] .loveNav .nav li:hover .text{
+	color: #eb93f1;
+}
+
+.slideView .view .content{
+	margin: 40px;
+}
+
+/*弹出层模块样式表*/
+
+.layer_outwrap{
+	font-family: "Microsoft YaHei";
+	overflow: hidden;
+	background: #fff;
+	border-radius: 10px;
+	color: #2a2727;
+	box-shadow: 0 0 20px #8f8c8c;
+}
+.layer_outwrap .insidewrap{
+	overflow: hidden;
+	margin: 5px 10px 10px 10px;
+	position: relative;
+}
+.layer_outwrap .insidewrap .top{
+	border-bottom: 1px solid #e3e3e3;
+	margin-bottom: 5px;
+	overflow: hidden;
+	cursor: move;
+}
+.layer_outwrap .insidewrap .top .layer_title{
+	float: left;
+	overflow: hidden;
+	height:28px;
+	line-height: 28px;
+}
+.layer_outwrap .insidewrap .top .layer_title .title_icon{
+	display: block;
+	width: 16px;
+	height: 16px;
+	margin-top: 6px;
+}
+.layer_outwrap .insidewrap .top .layer_title .row{
+	float: left;
+	line-height: 25px;
+	margin-right:5px;
+}
+.layer_outwrap .insidewrap .layer_close{
+	position: absolute;
+	top:5px;
+	right:0px;
+	cursor: pointer;
+	width: 18px;
+	-webkit-transition: all .25s ease-in-out;
+	   -moz-transition: all .25s ease-in-out;
+	    -ms-transition: all .25s ease-in-out;
+	     -o-transition: all .25s ease-in-out;
+	        transition: all .25s ease-in-out;
+	-webkit-transform: center center;
+	   -moz-transform: center center;
+	    -ms-transform: center center;
+	     -o-transform: center center;
+	        transform: center center;
+	height:18px;
+	background: url(./images/icon.png) -48px -312px;
+}
+.layer_outwrap .insidewrap .layer_close:hover{
+	-webkit-transform: rotate(360deg);
+	   -moz-transform: rotate(360deg);
+	    -ms-transform: rotate(360deg);
+	     -o-transform: rotate(360deg);
+	        transform: rotate(360deg);
+}
+.layer_outwrap .insidewrap .layer_content{
+	position:relative; margin:0px auto; padding:0px; overflow: hidden; 
+}
+.layer_outwrap .insidewrap .layer_content .dialog_msg{
+	min-width:200px;
+	padding:10px;
+	text-align: center;
+}
+.layer_outwrap .insidewrap .layer_content .buttons{
+	text-align: center;
+}
+.layer_outwrap .insidewrap .layer_content .buttons ul{
+	display: inline-block;
+}
+.layer_outwrap .insidewrap .layer_content .buttons ul li{
+	float: left;
+	margin:5px 10px 5px 10px;
+}
+
+.layer_outwrap .insidewrap .layer_content .buttons button {
+  font-family: "Microsoft YaHei";
+  cursor: pointer;
+  border:none;
+  color: #123456;
+  font-size: 15px;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  -webkit-transition: all .25s ease-in-out;
+     -moz-transition: all .25s ease-in-out;
+      -ms-transition: all .25s ease-in-out;
+       -o-transition: all .25s ease-in-out;
+          transition: all .25s ease-in-out;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0px 1px 3px #666666;
+  -moz-box-shadow: 0px 1px 3px #666666;
+  box-shadow: 0px 1px 3px #666666;
+  background: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e0dce0));
+  background: -moz-linear-gradient(top, #ffffff, #e0dce0);
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#ffffff, endColorStr=#e0dce0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=#ffffff, endColorStr=#e0dce0);
+  display:inline-block; /* IE is so silly */
+}
+.layer_outwrap .insidewrap .layer_content .buttons button:hover {
+  background: -webkit-gradient(linear, 0 0, 0 100%, from(#f0e8f0), to(#ffffff));
+  background: -moz-linear-gradient(top, #f0e8f0, #ffffff)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#e0dce0);
+  color: #aebebb;
+}
+.layer_outwrap .xubox_iframe{
+	position:relative; margin:0px auto; padding:0px; overflow: hidden; 
+}
+.layer_outwrap .ajax_content{
+	position:relative; margin:0px auto; padding:0px; overflow: hidden; 
+}
+
+/*carouselEvents模块*/
+
+.carouselEvents{
+	width:775px;
+	height:570px;
+	top:50%;
+	margin-top:-285px;
+	left:50%;
+	margin-left: -555px;
+	position: absolute;
+}
+.carouselEvents .btns{
+	width: 69px;
+	position: absolute;
+	left:-80px;
+	height:69px;
+	opacity: 0;
+	-webkit-transition: all 0.25s ease-in-out;
+	   -moz-transition: all 0.25s ease-in-out;
+	    -ms-transition: all 0.25s ease-in-out;
+	     -o-transition: all 0.25s ease-in-out;
+	        transition: all 0.25s ease-in-out;
+	background: url(./images/icon.png);
+}
+.carouselEvents .btns:hover{
+	opacity: 0.5 !important;
+}
+.carouselEvents .prevEventsBtn{
+	top:10px;
+	background-position: -20px -148px;
+}
+.carouselEvents .nextEventsBtn{
+	bottom:0;
+	background-position: -20px -79px;
+}
+.carouselEvents a{
+	text-decoration: none;
+	font-weight: normal;
+	color:#ffe3e4;
+}
+.carouselEvents .eventsContent{
+	overflow: hidden;
+	position: relative;
+}
+.carouselEvents .eventsContent .event_item{
+	background: rgba(148,10,13,0.2);
+	padding:10px;
+	width: 280px;
+	height:250px;
+	display: inline-block;
+	-webkit-animation: flash ease-in 0.4s;
+	-o-animation: flash ease-in 0.4s;
+	animation: flash ease-in 0.4s;
+	-webkit-transition: all 0.25s ease-in-out;
+	   -moz-transition: all 0.25s ease-in-out;
+	    -ms-transition: all 0.25s ease-in-out;
+	     -o-transition: all 0.25s ease-in-out;
+	        transition: all 0.25s ease-in-out;
+	margin:10px;
+}
+.carouselEvents .eventsContent .event_item:hover{
+	background: rgba(148,10,13,0.5);
+}
+.carouselEvents .eventsContent .event_item .event_title{
+	margin-top: 0;
+	margin-bottom: 15px;
+	font-size: 22px;
+	overflow: hidden;
+	white-space: nowrap;
+	font-family: "Microsoft YaHei";
+	letter-spacing: 3px;
+}
+.carouselEvents .eventsContent .event_item .event_title a{
+	-webkit-transition: all 0.25s ease-in-out;
+	   -moz-transition: all 0.25s ease-in-out;
+	    -ms-transition: all 0.25s ease-in-out;
+	     -o-transition: all 0.25s ease-in-out;
+	        transition: all 0.25s ease-in-out;
+}
+.carouselEvents .eventsContent .event_item:hover .event_title a{
+	color: #f8c3d0;
+}
+.carouselEvents .eventsContent .event_item .event_title a:hover{
+	color: #fff;
+}
+.carouselEvents .eventsContent .event_item .event_des{
+	font-family: "Microsoft YaHei";
+	font-size: 14px;
+	letter-spacing: 2px;
+	overflow: hidden;
+	height: 180px;
+	line-height: 25px;
+	color: #f9cee5;
+}
+.carouselEvents .eventsContent .event_item .event_data{
+	font-family: "Microsoft YaHei";
+	overflow: hidden;
+	float: right;
+}
+.carouselEvents .eventsContent .event_item .event_data li{
+	font-size: 14px;
+	color: #f9cee5;
+	float: left;
+	overflow: hidden;
+	margin-right:10px; 
+	text-align: right;
+}
+.carouselEvents .eventsContent .event_item .event_data li i{
+	display: block;
+	float: left;
+	margin-top: 1px;
+	margin-right: 5px;
+	width: 17px;
+	height: 15px;
+	opacity: 0.7
+}
+.carouselEvents .eventsContent .event_item .event_data li span{
+	display: block;
+	float: left;
+}
+.carouselEvents .eventsContent .event_item .event_data li.event_date i{
+	background: url(./images/icon.png) -101px -232px;
+}
+.carouselEvents .eventsContent .event_item .event_data li.event_views i{
+	background: url(./images/icon.png) -100px -260px;
+}
+.carouselEvents .eventsContent .event_item .event_data li.event_comments i{
+	background: url(./images/icon.png) -100px -284px;
+}

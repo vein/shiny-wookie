@@ -1,0 +1,15 @@
+<% for(var i=0;i<data.length;i++){ %>
+
+			<li class="event_item">
+				<h1 class="event_title"><a href="www.baidu.com"><%= data[i].title %></a></h1>
+				<div class="event_des">
+					<%= data[i].body %>
+				</div>
+				<ul class="event_data">
+					<% var date= new Date(data[i].published); %>
+					<li class="event_date row"><i></i><span><%= date.getFullYear() %>-<%= date.getMonth() %>-<%=date.getDate() %></span></li>
+					<li class="event_views row"><i></i><span>(<%= data[i].views %>)</span></li>
+					<li class="event_comments row"><i></i><span>(<%= data[i].comments %>)</span></li>
+				</ul>
+			</li>
+			<% } %>

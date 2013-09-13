@@ -1,0 +1,50 @@
+<div class="layer_outwrap_<%= zIndex %> layer_outwrap"  style="z-index:<%= zIndex %>;position:<%= fixed ? 'fixed' : 'absolute' %>; visibility:hidden">
+	<% if(type==3) { %>
+		<div class="tips_content"><%= content.msg %></div>
+		<i class="layertipsG"></i>
+	<% } else if(type==4) { %>
+		<% var loadings = [];%>
+		<div class="loading_content"><img src="<%= loadings[content.type] %>" /></div>
+	<% } else { %>
+		<div class="insidewrap">
+			<div class="top"> 
+				<div class="layer_title"><i class="title_icon row" style="background:url(<%=titleBg.url%>) <%=titleBg.left%>px <%=titleBg.top%>px;"></i><span class="row"><%= title %></span></div>				
+			</div>
+			<div class="layer_close"></div>
+			<div class="layer_content"> 
+				<% switch(type){ 
+						case 0:
+				%>
+					<div class="dialog_msg">
+						<%
+							var icons = [];
+						%>
+						<div class="icon"><img src="<%= icons[type] %>" /></div>
+						<div class="content">
+							<%= content.msg %>
+						</div>
+					</div>
+					<% if(content.btns>0) { %>
+						<div class="buttons">
+							<ul>
+								<% if(content.btns>=1) { %><li><button class="yesButton"><%= content.btn[0] %></button></li><% } %>
+								<% if(content.btns>=2) { %><li><button class="noButton"><%= content.btn[1] %></button></li><% } %>
+							</ul>
+						</div>
+				<%      } 
+						break;
+						case 1:
+				%>
+						<% if(content.dom&&!content.html&&!content.url) %><%= $(content.dom).html() %>
+						<% if(content.url&&!content.html&&!content.dom) { %><div class="ajax_content_<%= zIndex %> ajax_content" data="<%= content.url %>"></div><% } %>
+						<% if(content.html&&!content.dom&&!content.url) %><%= content.html %>
+				<%      break;
+				        case 2:
+				%>
+					<iframe allowtransparency="true"  class="xubox_iframe" frameborder="0" src="<%= content.src %>"></iframe>
+
+				<% break; }%>
+			</div>
+		</div>
+	<% } %>
+</div>
