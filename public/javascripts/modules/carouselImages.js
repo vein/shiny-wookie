@@ -8,18 +8,18 @@ define(function(require, exports, module) {
 		},
 		isRended: 0,
 		currentPage: 0,
-		uri: "/events/new",
+		uri: "/photos/new",
 		count: 4,
 		maxNum: 20,
 		elements: {
 			".slideView .view[view_name='index'] .content": "Container",
-			".carouselEvents": "InsideContainer",
-			".carouselEvents .events": "EventsContent",
-			".carouselEvents .btns": "Buttons"
+			".carouselImages": "InsideContainer",
+			".carouselImages .iamges": "ImagesContent",
+			".carouselImages .btns": "Buttons"
 		},
 		events: {
-			".carouselEvents .btns.prevEventsBtn|click": "prevEvents",
-			".carouselEvents .btns.nextEventsBtn|click": "nextEvents"
+			".carouselImages .btns.prevImagesBtn|click": "prevEvents",
+			".carouselImages .btns.nextImagesBtn|click": "nextEvents"
 		},
 		prevEvents: function(event) {
 			var _this = event.data;
@@ -28,7 +28,7 @@ define(function(require, exports, module) {
 				return;
 			} else _this.currentPage--;
 			_this.getData(_this.currentPage, function() {
-				_this._renderHTML(_this.EventsContent, './javascripts/views/carouselEventsContent.ejs', 'html');
+				_this._renderHTML(_this.EventsContent, './javascripts/views/carouselImagesContent.ejs', 'html');
 			});
 		},
 		nextEvents: function(event) {
@@ -38,7 +38,7 @@ define(function(require, exports, module) {
 				return;
 			} else _this.currentPage++;
 			_this.getData(_this.currentPage, function() {
-				_this._renderHTML(_this.EventsContent, './javascripts/views/carouselEventsContent.ejs', 'html');
+				_this._renderHTML(_this.EventsContent, './javascripts/views/carouselImagesContent.ejs', 'html');
 
 			});
 		},

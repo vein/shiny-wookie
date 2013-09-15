@@ -8,7 +8,6 @@ var settings = require('../settings'),
 	Pmsg = require('../api/pmsg'),
 	Portrait = require('../api/portrait'),
 	xss = require('xss'),
-	easyimg = require('easyimage'),
 	im = require('imagemagick'),
 	fs = require('fs'),
 	crypto = require('crypto'),
@@ -213,7 +212,7 @@ module.exports = function(app) {
 				social_account_type: /*req.session.user_info.social_account_type ||*/ "qq",
 				id: /*req.session.uid ||*/ "janry"
 			}
-		}, function(err,event) {
+		}, function(err, event) {
 			if (err) {
 				return res.json({
 					info: "error",
@@ -768,11 +767,11 @@ module.exports = function(app) {
 	app.post('/photo/upload', checkLogin);
 	app.post('/photo/upload', checkRole);
 	app.post('/photo/upload', function(req, res) {
-		var iamges = req.files.images,
+		var images = req.files.images,
 			errorn = [],
 			snum = 0,
 			time = new Date();
-
+		req.session.uid = "janry_wang";
 		images.forEach(function(o, i) {
 			if ((/^([-_a-zA-Z0-9x()]+)\.(jpg|jpeg|png|gif|bmp)$/i.test(o.name))) {
 				var tmp_path = o.path,
@@ -782,9 +781,17 @@ module.exports = function(app) {
 					file = fs.readFileSync(target_path);
 				} catch (e) {}
 				if (file) {
-					newName = generateNewName(o.name);
+					newName = generateNewName({
+						rootDir: "./upload_images/",
+						name: o.name,
+						appName: 'photo',
+						uid: req.session.uid,
+						dateTime: time
+					});
+
 					target_path = getTargetPath('./upload_images/', newName, 'photo', req.session.uid, time);
 				}
+
 				try {
 					fs.renameSync(tmp_path, target_path);
 				} catch (e) {
@@ -797,19 +804,7 @@ module.exports = function(app) {
 					}
 					return;
 				}
-				try {
-					fs.unlinkSync(tmp_path);
-				} catch (e) {
-					console.log(e);
-					if (snum == 0 && i == images.length - 1) {
-						return res.json({
-							info: "error",
-							data: "上传失败!"
-						});
-					}
-					return;
-				}
-
+				console.log(target_path);
 				im.readMetadata(target_path, function(err, metadata) {
 					if (err) {
 						console.log(err);
@@ -827,10 +822,10 @@ module.exports = function(app) {
 							title: xss(o.name)
 						}),
 						url: generateUrl('/images/get/', newName, 'photo', req.session.uid, time),
-						width: metadata.exif.exifImageWidth,
-						height: metadata.exif.exifImageLength,
-						cameraMake: metadata.exif.make,
-						cameraType: metadata.exif.model,
+						width: metadata.exif.exifImageWidth || "未知",
+						height: metadata.exif.exifImageLength || "未知",
+						cameraMake: metadata.exif.make || "未知",
+						cameraType: metadata.exif.model || "未知",
 						size: calculateSize(o.size),
 						uploaded: time.getTime(),
 						album: {
@@ -1781,7 +1776,7 @@ module.exports = function(app) {
 		return /*req.session.role == "admin"*/ true;
 	}
 
-	function checkLogin(req,res,next) {
+	function checkLogin(req, res, next) {
 		/*if (!req.session.uid) return res.json({
 			info: "error",
 			data: "对不起，您还没有登录！！"
@@ -1789,7 +1784,7 @@ module.exports = function(app) {
 		next();
 	}
 
-	function checkRole(req,res,next) {
+	function checkRole(req, res, next) {
 		/*if (req.session.role != 'admin' || req.session.role != 'lover')
 			return res.json({
 				info: "error",
@@ -1866,7 +1861,8 @@ module.exports = function(app) {
 
 	function generateDir(path, mode) {
 		var d = path.replace(/^\/|\/$/, "").split('/'),
-			i = 0;
+			i = 0,
+			Dir;
 		if (/(.+)\.(.+)/.test(d[d.length - 1])) d.pop();
 		if (d[0] == '.') {
 			d.shift();
@@ -1882,33 +1878,47 @@ module.exports = function(app) {
 		}
 		d.forEach(function(o, i) {
 			try {
-				fs.readdirSync(o);
-			} catch (e) {
-				if (e) {
-					if (mode) fs.mkdirSync(o, mode);
-					else fs.mkdirSync(o);
-				}
+				Dir = fs.readdirSync(o);
+			} catch (e) {}
+			if (!Dir) {
+				if (mode) fs.mkdirSync(o, mode);
+				else fs.mkdirSync(o);
 			}
 
 		});
 	}
 
-	function generateNewName(str) {
-		var t = parseImageUrl(str),
-			reg = /([-_a-zA-Z0-9x()]+)\((\d+)\)$/,
-			result;
+	function generateNewName(obj) {
+		var t = parseImageUrl(obj.name),
+			reg = /([-_a-zA-Z0-9x\(\)]+)(\((\d+)\))$/,
+			url,
+			result,
+			file;
 		if (reg.test(t.name)) {
 			result = t.name.replace(reg, function() {
-				return arguments[1] + "(" + (parseInt(arguments[2]) + 1) + ").";
+				return arguments[1] + "(" + (parseInt(arguments[3]) + 1) + ").";
 			}) + t.ext;
 		} else {
 			result = t.name + "(1)." + t.ext;
+		}
+		url = getTargetPath(obj.rootDir, result, obj.appName, obj.uid, obj.dateTime)
+		try {
+			file = fs.readFileSync(url);
+		} catch (e) {}
+		if (file) {
+			result = generateNewName({
+				rootDir: obj.rootDir,
+				name: result,
+				appName: obj.appName,
+				uid: obj.uid,
+				dateTime: obj.dateTime
+			});
 		}
 		return result;
 	}
 
 	function parseImageUrl(str) {
-		var results = /.*\/(([-_a-zA-Z0-9x()]+)\.(jpg|jpeg|png|gif|bmp))$/i.exec(str);
+		var results = /.*?\/?(([-_a-zA-Z0-9x\(\)]+)\.(jpg|jpeg|png|gif|bmp))$/i.exec(str);
 		return {
 			name: results[2],
 			ext: results[3]
@@ -1921,8 +1931,8 @@ module.exports = function(app) {
 	}
 
 	function getTargetPath(rootdir, name, appname, uid, DateTime) {
-		var path = rootdir.replace(/\/$/, "") + '/' + appname + '/' + uid + "/" + DateTime && (DateTime instanceof Date) && (DateTime.getFullYear() + "/" + DateTime.getMonth() + "/" + DateTime.getDay() + "/") + name;
-		generateDir(path);
+		var path = rootdir.replace(/\/$/, "") + '/' + appname + '/' + uid + "/" + (DateTime && (DateTime instanceof Date) && (DateTime.getFullYear() + "/" + DateTime.getMonth() + "/" + DateTime.getDay() + "/")) + name;
+		generateDir(path, 0777);
 		return path;
 	}
 

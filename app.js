@@ -5,6 +5,7 @@
 var express = require('express'),
 	routes = require('./routes'),
 	http = require('http'),
+	im = require('imagemagick'),
 	path = require('path');
 var settings = require('./settings');
 //var MongoStore = require('connect-mongodb');
@@ -18,7 +19,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.bodyParser({uploadDir:'./uploads'}));
+app.use(express.bodyParser({uploadDir:'./uploads_tmp'}));
 app.use(express.methodOverride());
 app.use(express.cookieParser('keyboard cat'));
 app.use(express.session({
@@ -61,16 +62,6 @@ var server = http.createServer(app);
 server.listen(80, function() {
 	console.log('Express server listening on port ' + 80);
 });
-io = require('socket.io').listen(server);
-io.sockets.on('connection', function(socket) {
-	socket.on('routerRequest', function(data) {
-		switch (parseInt(data.Id)) {
-			case 1:
-				socket.emit('bodyRender', 'I love you zhang yi!');
-				break;
-			case 2:
-				socket.emit('bodyRender', 'I want fuck you zhang yi!');
-				break;
-		}
-	});
-});
+im.readMetadata('./404.jpg', function(err, metadata) {
+	console.log(metadata);
+})
