@@ -1,5 +1,6 @@
 define(function(require, exports, module) {
 	var modules = require('common/modules');
+	var loading = require('modules/loading');
 	var carouselEvents = modules.create('carouselEvents', {
 		publicAPI: {
 			isRender: function() {
@@ -44,10 +45,12 @@ define(function(require, exports, module) {
 		},
 		getData: function(page, callback) {
 			var _this = this;
+			loading().show(this.InsideContainer);
 			$.ajax({
 				url: this.uri + "?start=" + page * this.count + "&count=" + this.count,
 				success: function(data) {
-					if (data.length) {
+					loading().hide(_this.InsideContainer);
+					if (data.length) {	
 						_this.viewData.data = data;
 						callback && callback.call(_this);
 					} else {

@@ -58,8 +58,8 @@ if ('development' == app.get('env')) {
 routes(app);
 
 var server = http.createServer(app);
-server.listen(app.get('port'), function() {
-	console.log('Express server listening on port ' + app.get('port'));
+server.listen(80, function() {
+	console.log('Express server listening on port ' + 80);
 });
 io = require('socket.io').listen(server);
 io.sockets.on('connection', function(socket) {

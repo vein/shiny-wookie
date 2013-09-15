@@ -61,6 +61,16 @@ ul,li{
 	 }
 	100% { opacity: 1; }
 }
+
+.ajax-loading{
+	background: url(./images/ajax-loader.gif);
+	width:16px;
+	height:11px;
+	position: absolute;
+	top:50%;
+	margin-left:-8px;
+	left:50%;
+}
 /*slideView模块*/
 
 .slideView{
@@ -366,7 +376,7 @@ ul,li{
 /*carouselEvents模块*/
 
 .carouselEvents{
-	width:775px;
+	width:645px;
 	height:570px;
 	top:50%;
 	margin-top:-285px;
